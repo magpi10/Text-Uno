@@ -2,9 +2,6 @@ import card
 from random import randint
 
 class Deck:
-    draw = []
-    discard = []
-    
     def __init__(self):
         self.draw = []
         self.discard = []
@@ -38,3 +35,6 @@ class Deck:
     
     def getTopCard(self):
         return(self.draw.pop(0))
+
+    def getCurrentDiscard(self):
+        return(self.discard[len(self.discard) - 1])
