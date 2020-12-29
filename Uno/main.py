@@ -44,11 +44,24 @@ while True:
     currentHand.sort()
     print("Your cards are")
     print(currentHand.getHandList())
-    print()
-    print("'d' = draw a card, 'p n' = play card with number n")
-    move = input("What do you want to do? ")
-    if move == "d":
-        currentHand.cards.append(deck.getTopCard())
-        currentPlayer = currentPlayer + 1
-        if currentPlayer > n:
-            currentPlayer = 1
+    isValidMove = False
+    while not isValidMove:
+        print()
+        print("'d' = draw a card, 'p n' = play card with number n")
+        move = input("What do you want to do? ")
+        if move == "d":
+            currentHand.cards.append(deck.getTopCard())
+            isValidMove = True
+        elif move.startswith("p "):
+            cardNo = move[2:]
+            idx = int(cardNo) - 1
+            cardToPlay = currentHand.cards[idx]
+            if currentDiscard.isValidMove(cardToPlay):
+                currentHand.removeCard(idx)
+                deck.discard.append(cardToPlay)
+                isValidMove = True
+        else:
+            print("Invalid entry")
+    currentPlayer = currentPlayer + 1
+    if currentPlayer > n:
+        currentPlayer = 1

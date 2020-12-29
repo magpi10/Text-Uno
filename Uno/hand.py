@@ -16,5 +16,8 @@ class Hand:
             s = s + "%s: %s %s, " %(n, i.group, i.name)
         return(s)
 
+    def removeCard(self, idx):
+        self.cards.pop(idx)
+
 def getKey(elem):
     return(elem.getDesc())

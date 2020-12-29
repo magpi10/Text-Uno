@@ -5,3 +5,6 @@ class Card:
     
     def getDesc(self):
         return("%s %s" %(self.group, self.name))
+
+    def isValidMove(self, card):
+        return(True)
