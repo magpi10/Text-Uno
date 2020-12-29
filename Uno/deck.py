@@ -9,8 +9,10 @@ class Deck:
         self.draw = []
         self.discard = []
         for g in ["red", "green", "yellow", "blue"]:
-            for n in range(0, 9):
+            for n in range(1, 9):
                 self.draw.append(card.Card(g,n))
+                self.draw.append(card.Card(g,n))
+            self.draw.append(card.Card(g,0))
             self.draw.append(card.Card(g,"+2"))
             self.draw.append(card.Card(g,"+2"))
             self.draw.append(card.Card(g,"block"))
