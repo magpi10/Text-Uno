@@ -20,4 +20,4 @@ class Hand:
         self.cards.pop(idx)
 
 def getKey(elem):
-    return(elem.getDesc())
+    return(elem.getDesc(False))

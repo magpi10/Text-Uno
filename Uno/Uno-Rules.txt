@@ -1,12 +1,12 @@
 Uno Rules:
-1. If the first card is a special card it plays onto the first player (2)
+X1. If the first card is a special card it plays onto the first player (2)
 2. Can't end on a special card (Card gets played but player picks up one) (10)
-3. Can only put down a card of the same color or number of the first one (1)
-4. Black/WildCards cards can be put down on any card (3)
+X3. Can only put down a card of the same color or number of the first one (1)
+X4. Black/WildCards cards can be put down on any card (3)
 5. Plus 2's stack with plus 4's and vis-versa (First person that can't stack a +2 or +4 picks up the combined amount of the stack) (5)
-6. If you cant play you pick up one card
+X6. If you cant play you pick up one card
 7. First person to put down all their cards wins (4)
-8. 7 cards are delt to the players at the beggining of the game
+X8. 7 cards are delt to the players at the beggining of the game
 9. When all cards are are out of the draw deck the discard deck gets put into the draw get except for the top card (6)
 10. For 2 players the reverse card acts like a skip/block card (7)
 11.For 2 players no stacking occurs (8)
