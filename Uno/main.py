@@ -43,8 +43,9 @@ for p in players:
 
 currentPlayer = 1
 direction = 1
+game = True
 
-while True:
+while game == True:
     currentHand = players[currentPlayer - 1]
     print("------------------------------------------------------------------------------------------------------------------------------")
     print("It's player " + currentHand.name + "'s turn.")
@@ -81,7 +82,7 @@ while True:
                     newColor = ""
                     while newColor == "":
                         newColor = input("Please enter the new color")
-                        newColor.lower()
+                        newColor = newColor.lower()
                         if newColor != "red" and newColor != "yellow" and newColor != "green" and newColor != "blue":
                             newColor = ""
                             print("Invalid color")
@@ -99,5 +100,9 @@ while True:
     currentPlayer = currentPlayer + direction
     if currentPlayer > n:
         currentPlayer = 1
-    if currentPlayer == 0:
+    elif currentPlayer == 0:
         currentPlayer = n
+    elif len(currentHand.cards) == 0:
+        game = False
+
+print(currentHand.name + " has won!")
