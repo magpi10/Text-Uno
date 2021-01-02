@@ -43,6 +43,7 @@ for p in players:
 
 currentPlayer = 1
 direction = 1
+currentStack = 0
 game = True
 
 while game == True:
@@ -51,9 +52,36 @@ while game == True:
     print("It's player " + currentHand.name + "'s turn.")
     currentDiscard = deck.getCurrentDiscard()
     print("The top discard card is a " + currentDiscard.getDesc(True))
-    if currentDiscard.name == "+2": 
-        for i in range(0,2):
-            currentHand.cards.append(deck.getTopCard())
+    if currentDiscard.name == "+2":
+        currentStack = currentStack + 2
+        if currentHand.hasCardWithName("+2"):
+            isValidMove = False
+            while not isValidMove:
+                r = currentHand.getCardsWithName("+2")
+                print("The cards you can play are:")
+                print(currentHand.getCardsList(r))
+                print()
+                print("'d' = draw " + str(currentStack) + " cards, 'card number' = play card with number")
+                move = input("What do you want to do? ")
+                if move == "d":
+                    for i in range(0,currentStack):
+                        currentHand.cards.append(deck.getTopCard())
+                        currentStack = 0
+                        isValidMove = True
+                elif move.isdigit():
+                    cardNo = move
+                    idx = int(cardNo) - 1
+                    cardToPlay = r[idx]
+                    idx = currentHand.getCardIndex(cardToPlay.group, cardToPlay.name)
+                    currentHand.removeCard(idx)
+                    deck.discard.append(cardToPlay)
+                    isValidMove = True
+                else:
+                    print("Invalid Move")
+        else:
+            for i in range(0,currentStack):
+                currentHand.cards.append(deck.getTopCard())
+                currentStack = 0
 
     if currentDiscard.name == "+4":
         for i in range(0,4):
@@ -65,13 +93,13 @@ while game == True:
     isValidMove = False
     while not isValidMove:
         print()
-        print("'d' = draw a card, 'p n' = play card with number n")
+        print("'d' = draw a card, 'card number' = play card with number")
         move = input("What do you want to do? ")
         if move == "d":
             currentHand.cards.append(deck.getTopCard())
             isValidMove = True
-        elif move.startswith("p "):
-            cardNo = move[2:]
+        elif move.isdigit():
+            cardNo = move
             idx = int(cardNo) - 1
             cardToPlay = currentHand.cards[idx]
             if currentDiscard.isValidMove(cardToPlay):
