@@ -54,10 +54,11 @@ while game == True:
     print("The top discard card is a " + currentDiscard.getDesc(True))
     if currentDiscard.name == "+2":
         currentStack = currentStack + 2
-        if currentHand.hasCardWithName("+2"):
+        if currentHand.hasCardWithName("+2") or currentHand.hasCardWithName("+4"):
             isValidMove = False
             while not isValidMove:
                 r = currentHand.getCardsWithName("+2")
+                r.append(currentHand.getCardsWithName("+4"))
                 print("The cards you can play are:")
                 print(currentHand.getCardsList(r))
                 print()
@@ -123,6 +124,22 @@ while game == True:
                         currentPlayer = 1
                     if currentPlayer == 0:
                         currentPlayer = n
+                if cardToPlay.name == "switch":
+                    n = 0
+                    s = ""
+                    otherPlayers = []
+                    for i in range(0, len(players)):
+                        if i != currentPlayer -1:
+                            otherPlayers.append(players[i])
+                    for i in otherPlayers:
+                        n = n + 1
+                        s = s + "%s: %s (%s cards), " %(n, p[i], (len(p[i].cards) + 1))
+                    print(s)
+                    playerNumber = input("Number of who you want to switch hands with: ")
+                    playerNumber = int(playerNumber) - 1
+                    ph = currentHand.cards
+                    currentHand.cards = otherPlayers[playerNumber].cards
+                    otherPlayers[playerNumber].cards = ph
         else:
             print("Invalid entry")
     currentPlayer = currentPlayer + direction
