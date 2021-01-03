@@ -85,8 +85,37 @@ while game == True:
                 currentStack = 0
 
     if currentDiscard.name == "+4":
-        for i in range(0,4):
-            currentHand.cards.append(deck.getTopCard())
+        currentStack = currentStack + 4
+        if currentHand.hasCardWithName("+2") or currentHand.hasCardWithName("+4"):
+            isValidMove = False
+            while not isValidMove:
+                r = currentHand.getCardsWithName("+2")
+                r.append(currentHand.getCardsWithName("+4"))
+                print("The cards you can play are:")
+                print(currentHand.getCardsList(r))
+                print()
+                print("'d' = draw " + str(currentStack) + " cards, 'card number' = play card with number")
+                move = input("What do you want to do? ")
+                if move == "d":
+                    for i in range(0,currentStack):
+                        currentHand.cards.append(deck.getTopCard())
+                        currentStack = 0
+                        isValidMove = True
+                elif move.isdigit():
+                    cardNo = move
+                    idx = int(cardNo) - 1
+                    cardToPlay = r[idx]
+                    idx = currentHand.getCardIndex(cardToPlay.group, cardToPlay.name)
+                    currentHand.removeCard(idx)
+                    deck.discard.append(cardToPlay)
+                    if currentDiscard.isValidMove(cardToPlay):
+                        isValidMove = True
+                else:
+                    print("Invalid Move")
+        else:
+            for i in range(0,currentStack):
+                currentHand.cards.append(deck.getTopCard())
+                currentStack = 0
 
     currentHand.sort()
     print("Your cards are")

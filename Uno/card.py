@@ -14,7 +14,6 @@ class Card:
             return(True)
         elif self.group == "black" and self.newColor == card.group:
             return(True)
-
         elif self.group != "black" and (card.group == self.group or card.name == self.name):
             return(True)
         else:
