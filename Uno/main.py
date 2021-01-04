@@ -47,6 +47,11 @@ currentStack = 0
 game = True
 
 while game == True:
+    if len(deck.draw) == 0:
+        for i in deck.discard:
+            if i != deck.getCurrentDiscard():
+                deck.draw.append(i)
+                deck.discard.pop(i)
     currentHand = players[currentPlayer - 1]
     print("------------------------------------------------------------------------------------------------------------------------------")
     print("It's player " + currentHand.name + "'s turn.")
@@ -177,6 +182,10 @@ while game == True:
     elif currentPlayer == 0:
         currentPlayer = n
     elif len(currentHand.cards) == 0:
-        game = False
+        if currentDiscard.group == "black" or currentDiscard.name == "reverse" or currentDiscard.name == "+2" or currentDiscard == "block":
+            print("You can't end on a special card take 1 card")
+            currentHand.cards.append(deck.getTopCard())
+        else:
+            game = False
 
 print(currentHand.name + " has won!")
