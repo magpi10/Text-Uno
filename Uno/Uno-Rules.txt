@@ -8,6 +8,6 @@ X6. If you cant play you pick up one card
 X7. First person to put down all their cards wins (4)
 X8. 7 cards are delt to the players at the beggining of the game
 X9. When all cards are are out of the draw deck the discard deck gets put into the draw get except for the top card (6)
-10. For 2 players the reverse card acts like a skip/block card (7)
-11.For 2 players no stacking occurs (8)
+X10. For 2 players the reverse card acts like a skip/block card (7)
+X11.For 2 players no stacking occurs (8)
 X12. Playing a skip/block in a 2 player game means you just play another card afterwards (9)

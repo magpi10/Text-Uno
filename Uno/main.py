@@ -58,36 +58,41 @@ while game == True:
     currentDiscard = deck.getCurrentDiscard()
     print("The top discard card is a " + currentDiscard.getDesc(True))
     if currentDiscard.name == "+2":
-        currentStack = currentStack + 2
-        if currentHand.hasCardWithName("+2") or currentHand.hasCardWithName("+4"):
-            isValidMove = False
-            while not isValidMove:
-                r = currentHand.getCardsWithName("+2")
-                r.append(currentHand.getCardsWithName("+4"))
-                print("The cards you can play are:")
-                print(currentHand.getCardsList(r))
-                print()
-                print("'d' = draw " + str(currentStack) + " cards, 'card number' = play card with number")
-                move = input("What do you want to do? ")
-                if move == "d":
-                    for i in range(0,currentStack):
-                        currentHand.cards.append(deck.getTopCard())
-                        currentStack = 0
+        if n > 2:
+            currentStack = currentStack + 2
+            if currentHand.hasCardWithName("+2") or currentHand.hasCardWithName("+4"):
+                isValidMove = False
+                while not isValidMove:
+                    r = currentHand.getCardsWithName("+2")
+                    r.append(currentHand.getCardsWithName("+4"))
+                    print("The cards you can play are:")
+                    print(currentHand.getCardsList(r))
+                    print()
+                    print("'d' = draw " + str(currentStack) + " cards, 'card number' = play card with number")
+                    move = input("What do you want to do? ")
+                    if move == "d":
+                        for i in range(0,currentStack):
+                            currentHand.cards.append(deck.getTopCard())
+                            currentStack = 0
+                            isValidMove = True
+                    elif move.isdigit():
+                        cardNo = move
+                        idx = int(cardNo) - 1
+                        cardToPlay = r[idx]
+                        idx = currentHand.getCardIndex(cardToPlay.group, cardToPlay.name)
+                        currentHand.removeCard(idx)
+                        deck.discard.append(cardToPlay)
                         isValidMove = True
-                elif move.isdigit():
-                    cardNo = move
-                    idx = int(cardNo) - 1
-                    cardToPlay = r[idx]
-                    idx = currentHand.getCardIndex(cardToPlay.group, cardToPlay.name)
-                    currentHand.removeCard(idx)
-                    deck.discard.append(cardToPlay)
-                    isValidMove = True
-                else:
-                    print("Invalid Move")
+                    else:
+                        print("Invalid Move")
+            else:
+                for i in range(0,currentStack):
+                    currentHand.cards.append(deck.getTopCard())
+                    currentStack = 0
         else:
             for i in range(0,currentStack):
-                currentHand.cards.append(deck.getTopCard())
-                currentStack = 0
+                    currentHand.cards.append(deck.getTopCard())
+                    currentStack = 0
 
     if currentDiscard.name == "+4":
         currentStack = currentStack + 4
@@ -151,7 +156,14 @@ while game == True:
                             print("Invalid color")
                     cardToPlay.newColor = newColor
                 if cardToPlay.name == "reverse":
-                    direction = direction * -1
+                    if n > 2:
+                        direction = direction * -1
+                    if n == 2:
+                        currentPlayer = currentPlayer + direction
+                        if currentPlayer > n:
+                            currentPlayer = 1
+                        if currentPlayer == 0:
+                            currentPlayer = n
                 if cardToPlay.name == "block":
                     currentPlayer = currentPlayer + direction
                     if currentPlayer > n:
@@ -174,6 +186,10 @@ while game == True:
                     ph = currentHand.cards
                     currentHand.cards = otherPlayers[playerNumber].cards
                     otherPlayers[playerNumber].cards = ph
+                if len(currentPlayer.cards) == 0:
+                    if cardToPlay.group == "black" or cardToPlay.name == "+2" or cardToPlay.name == "reverse" or cardToPlay.name == "block":
+                        print("You can't end on a special card")
+                        currentPlayer.cards.append(deck.getTopCard())
         else:
             print("Invalid entry")
     currentPlayer = currentPlayer + direction
@@ -182,10 +198,6 @@ while game == True:
     elif currentPlayer == 0:
         currentPlayer = n
     elif len(currentHand.cards) == 0:
-        if currentDiscard.group == "black" or currentDiscard.name == "reverse" or currentDiscard.name == "+2" or currentDiscard == "block":
-            print("You can't end on a special card take 1 card")
-            currentHand.cards.append(deck.getTopCard())
-        else:
-            game = False
+        game = False
 
 print(currentHand.name + " has won!")
